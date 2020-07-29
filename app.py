@@ -3,7 +3,7 @@ import numpy as np
 import os
 import time
 import json
-global student_name="Not Logged In"
+global student_name
 student_dict={}
 import pickle as pkl
 
