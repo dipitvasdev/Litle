@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TEST PORTAL | {{result}}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="student.css">
+        <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+        <link rel="icon" href="tablet.png" sizes="16x16">
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-storage.js"></script>
+        <script>
+        if (sessionStorage.getItem("uid") === null) {
+          window.location.href="/" ;
+        }
+        </script>
+    </head>
+    <body>
+        <nav>
+      <div class="nav-img">
+        <img width="48px" height="48px" src="tablet.png">
+        <span class="head-text">LITLE <sub>by Dr. EDU</sub></span>
+      </div>
+  </nav>
+<div class="main">
+            <div class = "form">
+            <h2>Proceed to test...</h2>
+            <div class = "input" id="login" >
+                <div class= "inputBox">
+                    <label>Access Code</label>
+                    <input id = "email" type="text" placeholder="Access code here">
+                </div>
+                <div class= "inputBox">
+                    <button form="login" onclick="checking()" type="submit" name="">Proceed</button>
+                </div>
+            </div>
+        </div>
+    </div>
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script>
+            var firebaseConfig = {
+    apiKey: "AIzaSyB-W2AktdEtM7z_KHSWXXT_3PoBoWFdubM",
+    authDomain: "dredu-71835.firebaseapp.com",
+    databaseURL: "https://dredu-71835.firebaseio.com",
+    projectId: "dredu-71835",
+    storageBucket: "dredu-71835.appspot.com",
+    messagingSenderId: "1010179971420",
+    appId: "1:1010179971420:web:d2fc28ac5634b8ee8a0999",
+    measurementId: "G-19Z5Q66FHX"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
+            function checking(){
+
+                var date = new Date();
+                var today = date.getDate() + '-' + (date.getMonth()+1) + '-' + date.getFullYear()
+                emailAddress = document.querySelector('#email').value;
+                console.log(today)
+                sessionStorage.setItem("pid", emailAddress);
+                console.log (emailAddress);
+                var batch = localStorage.getItem("batch");
+                localStorage.setItem("batch" , batch);
+                var name = localStorage.getItem('name');
+                localStorage.setItem("name" , name);
+                console.log(batch , name);
+                batch = batch.split("(");
+                var database = firebase.database().ref( "users/" + emailAddress + "/question_paper/");
+                database.child( batch[0] + '/').once('value', function(snapshot){
+                  snapshot.forEach(function(childSnapshot){
+                  console.log(childSnapshot);
+                    childSnapshot.forEach(function(childchildSnapshot){
+                      console.log(childchildSnapshot.key);
+                      if(childchildSnapshot.key == today){
+                        console.log('called' , childchildSnapshot.key);
+                        localStorage.setItem('question_paper_type' , childSnapshot.key );
+                        localStorage.setItem('question_paper' , childchildSnapshot.key);
+                        if(childSnapshot.key == 'q1'){
+                          console.log('Question Type is Long Subjective');
+                          window.location.href = "subjective";
+                        }
+                      }
+                    });
+                  });
+                });
+                //window.location = 'Quiz.html'
+            }
+        </script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ask Doubt | {{result}}</title>
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"> -->
+<link rel="stylesheet" type="text/css" href="doubts.css">
+<link rel="icon" href="tablet.png" sizes="16x16">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-storage.js"></script>
+<script>
+if (sessionStorage.getItem("uid") === null) {
+	window.location.href="/" ;
+}
+</script>
+</head>
+<body translate="no">
+<head>
+<link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css' />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+</head>
+<body>
+	<nav>
+<div class="nav-img">
+  <img width="48px" height="48px" src="tablet.png">
+  <span class="head-text">LITLE <sub>by Dr. EDU</sub></span>
+</div>
+</nav>
+    <header>Ask Doubts</header>
+<div class="frame">
+<div id="button_open_envelope">
+Send Query
+</div>
+<div class="message">
+<form method="post" action="">
+<input type="text" name="name" id="name" placeholder=" Name* " required>
+<div class="dropdown">
+    <span class="selLabel" id = 'teacher'>Select Subject*</span>
+    <input type="hidden" name="cd-dropdown">
+    <ul class="dropdown-list">
+    <li data-value="1">
+    <span>ADA</span>
+    </li>
+    <li data-value="2">
+    <span>Industrial Management</span>
+    </li>
+    <li data-value="3">
+    <span>Digital Communication</span>
+    </li>
+    <li data-value="4">
+    <span>Java Programming</span>
+    </li>
+    <li data-value="5">
+    <span>Software Engineering</span>
+    </li>
+    <li data-value="6">
+    <span>ML</span>
+    </li>
+    </ul>
+    </div>
+<input type="text" name="phone" id="phone" placeholder="Batch*" required>
+<textarea style="resize:none;"name="message" id="messarea" placeholder=" Your Doubts or Questions " required></textarea>
+<input type="text" name="address" id="address" style="display: none;">
+<input type="submit" value="Send" id="send">
+</form>
+</div>
+<div class="bottom"></div>
+<div class="left"></div>
+<div class="right"></div>
+<div class="top"></div>
+</div>
+</body>
+<script id="rendered-js">
+$(document).ready(function () {
+  $('.frame').click(function () {
+    $('.top').addClass('open');
+		$('.frame').addClass('unique') ;
+    $('.message').addClass('pull');
+  });
+
+});
+$(document).ready(function () {
+
+$(".selLabel").click(function () {
+  $('.dropdown').toggleClass('active');
+  $('.dropdown-list').toggleClass("dips");
+});
+
+$(".dropdown-list li").click(function () {
+  $('.selLabel').text($(this).text());
+  $('.dropdown').removeClass('active');
+  $('.selected-item p span').text($('.selLabel').text());
+  $('.dropdown-list').removeClass("dips");
+});
+
+});
+    </script>
+<script src = 'doubts.js'> </script>
+</body>
+</html>

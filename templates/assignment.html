@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Assignment Portal| {{result}}</title>
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+     <script src="https://smtpjs.com/v3/smtp.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-database.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-storage.js"></script>
+     <script>
+     if (sessionStorage.getItem("uid") === null) {
+       window.location.href="/" ;
+     }
+     </script>
+     <link rel="icon" href="tablet.png" sizes="16x16">
+     <link rel="stylesheet" href="assignment.css">
+  </head>
+  <body>
+    <nav>
+  <div class="nav-img">
+    <img width="48px" height="48px" src="tablet.png">
+    <span class="head-text">LITLE <sub>by Dr. EDU</sub></span>
+  </div>
+  </nav>
+  <button type="button" name="button" onclick = 'hello()'> Download Assignments based on date</button>
+  <div class = "container">
+      <div class ="card" id = "card">
+      </div>
+  </div>
+  <div class="text-input">
+      <div class="con">
+          <h2>Submission Date:</h2>
+          <div class="select">
+            <select id="select_day">
+              <option id = 'day'>Day</option>
+            </select>
+          </div>
+          <div class="select">
+            <select id="select_month">
+              <option id = 'month'>Month</option>
+            </select>
+          </div>
+          <div class="select">
+            <select id="select_year">
+              <option id = 'year'>Year</option>
+            </select>
+          </div>
+        </div>
+      <div class="con">
+          <h2>Subject: </h2>
+          <div class="select">
+            <select id="select_subject">
+              <option id = 'subject'>Subject</option>
+            </select>
+          </div>
+        </div>
+
+</div>
+  <div class="content">
+    <input type="file" name="uploadbox" value="" id = 'we' hidden>
+    <label for="we" id="selector">SELECT A FILE</label>
+    </div>
+  </body>
+  <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+        <script>
+           (function () {
+var resize;
+
+$("#bt").click(function () {
+if ($("#bt").hasClass("loading-start")) {
+  if ($("#bt").hasClass("loading-end")) {
+    return $("#bt").attr("class", "");
+  }
+} else {
+  setTimeout(function () {
+    return $("#bt").addClass("loading-start");
+  }, 0);
+  setTimeout(function () {
+    return $("#bt").addClass("loading-progress");
+  }, 500);
+  return setTimeout(function () {
+    return $("#bt").addClass("loading-end");
+  }, 1500);
+}
+});
+
+resize = function () {
+return $("body").css({
+  "margin-top": ~~((window.innerHeight - 260) / 2)*0 + "px" });
+
+};
+
+$(window).resize(resize);
+
+resize();
+
+}).call(this);
+        </script>
+        <script>
+            // :: DAY
+var $select_day = $("#select_day");
+for(var i = 1; i < 32; i++) {
+  var day_number = i;
+  $('<option>')
+    .val(('0' + day_number).slice(-2))   // set the value
+    .text(i)    // set the text in in the <option>
+    .appendTo($select_day);
+}
+
+
+// :: MONTH
+var $select_month = $("#select_month");
+var options = ["January","February","March","April","May","June", "July","August","September","October","November","December"];
+for(var i = 0; i < options.length; i++) {
+  var month_number = i + 1;
+  $('<option>')
+    .val(('0' + month_number).slice(-2))          // set the value
+    .text(options[i])    // set the text in in the <option>
+    .appendTo($select_month);
+}
+
+
+// :: YEAR
+var $select_year = $("#select_year");
+// Get the current year
+var year = new Date().getFullYear();
+var $select_year = $('#select_year').empty();
+
+for(var i = 0; i < 99; i++) {
+  $('<option>')
+    .val(year - i)     // set the value
+    .text(year - i)    // set the text in in the <option>
+    .appendTo($select_year);
+}
+
+var $select_subject = $("#select_subject");
+var options = ["ADA" , "Java Programming" , "Software Engineering" , "Digital Communication"];
+for(var i = 0; i < options.length; i++) {
+  var month_number = i + 1;
+  $('<option>')
+    .val(('0' + month_number).slice(-2))          // set the value
+    .text(options[i])    // set the text in in the <option>
+    .appendTo($select_subject);
+}
+var loader=function(e){
+  let file=e.target.files ;
+  let show="<span >UPLOADED FILE:</span>"+file[0].name ;
+  let output=document.getElementById("selector") ;
+  output.innerHTML=show ;
+  output.classList.add("active") ;
+};
+let fileInput=document.getElementById("we") ;
+fileInput.addEventListener("change",loader) ;
+
+        </script>
+<script>
+    var firebaseConfig = {
+    apiKey: "AIzaSyB-W2AktdEtM7z_KHSWXXT_3PoBoWFdubM",
+    authDomain: "dredu-71835.firebaseapp.com",
+    databaseURL: "https://dredu-71835.firebaseio.com",
+    projectId: "dredu-71835",
+    storageBucket: "dredu-71835.appspot.com",
+    messagingSenderId: "1010179971420",
+    appId: "1:1010179971420:web:d2fc28ac5634b8ee8a0999",
+    measurementId: "G-19Z5Q66FHX"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+          var uid = sessionStorage.getItem('uid');
+          //console.log(uid);
+          //console.log(localStorage.getItem('ADA'));
+          var subject = 'EEWydIQ4cmhRP1eCZzMKBbHv7Qo1'//localStorage.getItem('ADA')
+          var batch = 'CSE'//localStorage.getItem('batch');
+          var name = 'Dipit Vasdev'//localStorage.getItem('name');
+          console.log(batch, name);
+
+          //console.log(schedule_date);
+          var file = document.getElementById('we');
+          file.addEventListener("change", handleFile , false);
+          function handleFile(){
+            console.log('hello');
+            var date = document.getElementById('select_day').value;
+            console.log(date);
+                var month = document.getElementById('select_month').value;
+                console.log(month);
+                var year = document.getElementById('select_year').value;
+                console.log(year);
+                var sub = document.getElementById('select_subject').value;
+                console.log(sub);
+                var schedule_date = date +'-' + month + '-' + year;
+            if (schedule_date == null){alert('Please enter date of submission in dd-mm-yyyy format');}
+            else{
+              const fileList = this.files;
+              console.log(this.files);
+              if(batch == 'CSE(eve)'){batch = 'CSE';}
+              if(sub == '01'){ sub = 'ADA'; }
+              var ref1 = firebase.storage().ref( batch +'/'+ name + '/assignment/' + sub +'/' + schedule_date + '/' + name + '_' + schedule_date + '/').put(fileList[0]);
+              alert('The assignment is uploaded!!!\n \n If you want to change up the file, No worries just click back into the file and upload once again.');
+              var ref2 = firebase.storage().ref( subject +'/assignment/' + batch +'/'+ schedule_date + '/' + name + '_' + schedule_date + '/').put(fileList[0]);
+         }  }
+         function hello(){
+            firebase.storage().ref(batch + '/assignments/').listAll().then(function(r){
+              r.items.forEach(element => {
+                $("#card").append("<li class = 'content1'>" + element.name + "</li>");
+              });
+              var col = document.getElementsByClassName("content1");
+              var i;
+                var content;
+                for (i = 0 ; i < col.length; i++) {
+                  col[i].addEventListener("click", function() {
+                    content = this.textContent;
+
+                    console.log('p');
+                    window.location.href = 'https://firebasestorage.googleapis.com/v0/b/dredu-71835.appspot.com/o/CSE%2Fassignments%2F03-08-2020?alt=media&token=81fc664b-d688-46de-912d-c5bc491e8146' ;
+                      console.log('o');
+
+                  });
+                }
+            });
+         }
+
+        </script>
+</html>

@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;500;700&display=swap');
+*{
+    box-sizing: border-box;
+}
+nav {
+    height: 10vh ;
+    display: flex;
+}
+
+.nav-img
+{
+    height: 48px ;
+    display: inline-flex;
+    float:  left;
+    margin-top: 5px ;
+    margin-left: 10px ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.head-text{
+    font-weight: bold !important;
+    color: white !important;
+    padding:10px !important;
+    font-size: 40px !important;
+}

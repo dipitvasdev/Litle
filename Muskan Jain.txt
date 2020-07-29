@@ -1,0 +1,7 @@
+Q 1 : I am DIpit
+Q 2 : The heart has four chambers:
+
+The right atrium receives blood from the veins and pumps it to the right ventricle.
+The right ventricle receives blood from the right atrium and pumps it to the lungs, where it is loaded with oxygen.
+The left atrium receives oxygenated blood from the lungs and pumps it to the left ventricle.
+The left ventricle (the strongest chamber) pumps oxygen-rich blood to the rest of the body. The left ventricle’s vigorous contractions create our blood pressure.

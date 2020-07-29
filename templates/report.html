@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>My Reports| {{result}}</title>
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+     <script src="https://smtpjs.com/v3/smtp.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-database.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-storage.js"></script>
+     <script>
+     if (sessionStorage.getItem("uid") === null) {
+       window.location.href="/" ;
+     }
+     </script>
+     <link rel="icon" href="tablet.png" sizes="16x16">
+     <link rel="stylesheet" href="result.css">
+  </head>
+  <body>
+    <nav>
+  <div class="nav-img">
+    <img width="48px" height="48px" src="tablet.png">
+    <span class="head-text">LITLE <sub>by Dr. EDU</sub></span>
+  </div>
+  </nav>
+  <table class="rwd-table">
+  <tr>
+    <th>Test Date</th>
+    <th>Subject</th>
+    <th>Marks</th>
+    <th>Test Type</th>
+  </tr>
+  </tr>
+</table>
+  </body>
+  <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+      <script>
+      var firebaseConfig = {
+    apiKey: "AIzaSyB-W2AktdEtM7z_KHSWXXT_3PoBoWFdubM",
+    authDomain: "dredu-71835.firebaseapp.com",
+    databaseURL: "https://dredu-71835.firebaseio.com",
+    projectId: "dredu-71835",
+    storageBucket: "dredu-71835.appspot.com",
+    messagingSenderId: "1010179971420",
+    appId: "1:1010179971420:web:d2fc28ac5634b8ee8a0999",
+    measurementId: "G-19Z5Q66FHX"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+        var batch = localStorage.getItem('batch');
+        var name = localStorage.getItem('name');
+        var t = batch.split('(');
+        var sum = 0;
+        var ref = firebase.storage().ref( t[0] + '/' + name + '/test/ADA/Marks_Till_Now/') ;
+  ref.child('marks.txt').getDownloadURL().then(function(url){
+        fetch(url).then(function(response){
+                response.text().then(function(text){
+                        text1 = text.split('\n');
+                        var i ;
+                        for( i = 1 ; i < text1.length ; i++){
+                            texting = text1[i].split(':');
+                            sum= sum+ parseFloat(texting[1]);
+                            $('.rwd-table').append("<tr class='bg-info1'><td>" + texting[0] + "</td><td>ADA</td><td>"+ texting[1]+"</td><td>Small TEST</td></tr>");
+                        }
+                        $('.rwd-table').append("<tr class='bg-info1'><td >" + '' + "</td><td>"+ '' +"</td></tr>");
+                        $('.rwd-table').append("<tr class='bg-info1'><td>" + 'Total Marks' + "</td><td></td><td>"+ sum+"</td></tr>");
+                });
+        });
+  });
+      </script>
+</html>

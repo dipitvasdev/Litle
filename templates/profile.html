@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Profile | {{result[0]}}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="profile.css">
+  <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+  <link rel="icon" href="tablet.png" sizes="16x16">
+  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-storage.js"></script>
+  <script>
+  if (sessionStorage.getItem("uid") === null) {
+    window.location.href="/" ;
+  }
+  </script>
+</head>
+<body>
+  <nav>
+    <div class="nav-img">
+      <img width="48px" height="48px" src="tablet.png">
+      <span class="head-text">LITLE <sub>by Dr. EDU</sub></span>
+    </div>
+  </nav>
+  <div class="container">
+    <div class="grid-7 element-animation">
+      <!--card-1-->
+      <div class="card color-card">
+        <ul>
+          <li onclick=" window.history.back();"><i class="fas fa-arrow-left i-l w"></i></li>
+          <li><i class="fas fa-ellipsis-v i-r w"></i></li>
+          <!-- <li><i class="far fa-heart i-r w"></i></li> -->
+        </ul>
+        <img src="{{ url_for('static', filename=result[2].lstrip('/'))}}" alt="profile-pic" class="profile">
+        <h1 class="title" id="name"></h1>
+        <p class="job-title" id="email"></p>
+        <div class="desc top">
+          <p>{{result[1]}}</p>
+        </div>
+        <button class="btn color-a top" id="myBtn">EDIT</button>
+        <div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <form action="/profile" enctype="multipart/form-data" method="post" id="com">
+      <input type="file" name="pic_file" value="CHOOSE PROFILE PICTURE">
+      <input type="text" name="bio" placeholder="BIO">
+      <button type="submit" form="com">SUBMIT</button
+    </form>
+  </div>
+
+</div>
+
+        <hr>
+        <div class="container">
+          <div class="content">
+            <div class="grid-2">
+              <button class="color-b circule"> <img src="teacher.png" width="32px" height="32px" ></button>
+              <h3 class="title" id="batch"></h3>
+              <p class="followers">Batch</p>
+            </div>
+            <div class="grid-2">
+              <button class="color-c circule"><img src="course.png" width="32px" height="32px" ></button>
+              <h3 class="title" id="year"></h3>
+              <p class="followers">Year</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+var n=document.getElementById("name") ;
+console.log(n.innerText)
+var e=document.getElementById("email") ;
+console.log(e.innerText)
+var b=document.getElementById("batch") ;
+console.log(b.innerText)
+var y=document.getElementById("year") ;
+console.log(y.innerText);
+    var firebaseConfig = {
+    apiKey: "AIzaSyB-W2AktdEtM7z_KHSWXXT_3PoBoWFdubM",
+    authDomain: "dredu-71835.firebaseapp.com",
+    databaseURL: "https://dredu-71835.firebaseio.com",
+    projectId: "dredu-71835",
+    storageBucket: "dredu-71835.appspot.com",
+    messagingSenderId: "1010179971420",
+    appId: "1:1010179971420:web:d2fc28ac5634b8ee8a0999",
+    measurementId: "G-19Z5Q66FHX"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    var uid = sessionStorage.getItem('uid');
+
+    var database = firebase.database();
+    console.log(uid);
+    database.ref("Student/"+ uid + "/").once('value').then(function(snapshot){
+        n.innerText = snapshot.val().name ;
+        e.innerText= snapshot.val().username;
+        b.innerText=snapshot.val().Batch ;
+        y.innerText=snapshot.val().year ;
+      });
+      function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">
+</body>
+</html>

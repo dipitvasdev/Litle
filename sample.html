@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		SAMPLE
+	</title>
+	<script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-storage.js"></script>
+    </head>
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<div id="appendee_div"></div>
+ <script type="text/javascript">
+ 	function append_url_content_to_div(url){
+  $.get(url, function(returned_data){
+    console.dir(returned_data);
+    var content = '<span>'+returned_data+'</span>';
+    $("#appendee_div").append(content);								
+  });
+}
+append_url_content_to_div("https://storage.googleapis.com/dredu-71835.appspot.com/EEWydIQ4cmhRP1eCZzMKBbHv7Qo1/test/cseeve/Dipit/2020-7-5.rtf");
+ 	var firebaseConfig = {
+    apiKey: "AIzaSyB-W2AktdEtM7z_KHSWXXT_3PoBoWFdubM",
+    authDomain: "dredu-71835.firebaseapp.com",
+    databaseURL: "https://dredu-71835.firebaseio.com",
+    projectId: "dredu-71835",
+    storageBucket: "dredu-71835.appspot.com",
+    messagingSenderId: "1010179971420",
+    appId: "1:1010179971420:web:d2fc28ac5634b8ee8a0999",
+    measurementId: "G-19Z5Q66FHX"
+  };  
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  var ref = firebase.storage().ref( 'EEWydIQ4cmhRP1eCZzMKBbHv7Qo1/test/cseeve/Dipit') ;
+  ref.child('2020-7-5.rtf').getDownloadURL().subscribe(data => {
+  	fetch(data).then(function(response){
+  		response.text().then(function(text){
+  			console.log(text)
+  		});
+  	}) ;
+  }) ;
+
+
+ </script>
+</body>
+</html>

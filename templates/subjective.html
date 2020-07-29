@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subjective Test | {{result}}</title>
+  <link rel="stylesheet" type="text/css" href="subjective.css">
+  <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-database.js"></script>
+        <link rel="icon" href="tablet.png" sizes="16x16">
+        <script>
+        if (sessionStorage.getItem("uid") === null) {
+          window.location.href="/" ;
+        }
+        </script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-storage.js"></script>
+</head>
+<body>
+  <div class="fixed-nav-bar">
+    <img width="48px" height="48px" src="tablet.png">
+    <span class="head-text">LITLE <sub>by Dr. EDU</sub></span>
+    <span id="demo">3:00:00</span>
+    <button id="start-button" onclick="go()">START TEST!</button>
+</div>
+<div class="short-ques">
+  <span id="question-text"></span>
+    <button id="next-button" onclick="xyz()" style="display:none"> NEXT</button>
+    <button id='su' onclick = 'p()' style="display:none"> Submit </button>
+</div>
+<div class="fig">
+  <h2 style="color: white;"><i>figure here</i></h2>
+    <h2 style="color: white;" id="ins">GO TO DR. EDU APP ON YOUR PHONE TO SCAN FIGURE</h2>
+</div>
+
+<div class="main">
+    <div class="wrapper">
+  <h1>{{result}}</h1>
+  <input type="text" placeholder="Title">
+  <div class="options">
+    <button onClick="transform('bold', null)">
+      <i class="fas fa-bold"></i>
+    </button>
+    <button onClick="transform('italic', null)">
+      <i class="fas fa-italic"></i>
+    </button>
+    <button onClick="transform('strikeThrough', null)">
+      <i class="fas fa-strikethrough"></i>
+    </button>
+    <button onClick="transform('underline', null)">
+      <i class="fas fa-underline"></i>
+    </button>
+    <div class="seperator"></div>
+    <button onClick="transform('justifyLeft', null)">
+      <i class="fas fa-align-left"></i>
+    </button>
+    <button onClick="transform('justifyCenter', null)">
+      <i class="fas fa-align-center"></i>
+    </button>
+    <button onClick="transform('justifyRight', null)">
+      <i class="fas fa-align-right"></i>
+    </button>
+    <div class="seperator"></div>
+    <button onClick="transform('insertOrderedList', null)">
+      <i class="fas fa-list-ol"></i>
+    </button>
+    <button onClick="transform('insertUnorderedList', null)">
+      <i class="fas fa-list-ul"></i>
+    </button>
+    <div class="seperator"></div>
+    <select onChange="transform('fontName', this.value)">
+      <option disabled default>Font</option>
+      <option value="Times New Roman">Times</option>
+      <option value="Arial">Arial</option>
+      <option value="Courier New">Courier New</option>
+      <option value="Tahoma">Tahoma</option>
+      <option value="Arial">Verdana</option>
+    </select>
+    <div class="seperator"></div>
+    <input type="number" onChange="transform('fontSize', this.value)" value="3" max="7" min="1"></input>
+  </div>
+  <iframe name="editor" id="editor"></iframe>
+
+</div>
+</div>
+<script defer src="https://use.fontawesome.com/releases/v5.5.0/js/all.js" integrity="sha384-GqVMZRt5Gn7tB9D9q7ONtcp4gtHIUEW/yG7h98J7IpE3kpi+srfFyyB/04OV6pG0" crossorigin="anonymous"></script>
+  </div>
+
+<script>
+var finaldocs="" ;
+
+  var firebaseConfig = {
+    apiKey: "AIzaSyB-W2AktdEtM7z_KHSWXXT_3PoBoWFdubM",
+    authDomain: "dredu-71835.firebaseapp.com",
+    databaseURL: "https://dredu-71835.firebaseio.com",
+    projectId: "dredu-71835",
+    storageBucket: "dredu-71835.appspot.com",
+    messagingSenderId: "1010179971420",
+    appId: "1:1010179971420:web:d2fc28ac5634b8ee8a0999",
+    measurementId: "G-19Z5Q66FHX"
+  };
+  // Initialize Firebase
+
+  var question_paper_type = localStorage.getItem('question_paper_type');
+
+  var question_paper = localStorage.getItem('question_paper');
+  var time_of_test;
+  var due_date
+  var question_set = {}
+  var question_number1 = 1;
+  var batch = localStorage.getItem('batch');
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+  var Batch = batch.split('(');
+  var database = firebase.database();
+  var uid = sessionStorage.getItem("pid");
+console.log(question_paper_type , question_paper , batch , uid)
+    var question_number = 0 ;
+    flag1 = 0;
+var student = localStorage.getItem("name")
+console.log(student);
+      console.log('called o');
+      database.ref('users/' + uid +'/question_paper/' + Batch[0] + '/' + question_paper_type + '/' + question_paper + '/' ).once('value').then(function(snapshot){
+              console.log(question_paper_type , question_paper , batch , uid)
+              snapshot.forEach(function(childSnapshot){
+                console.log(childSnapshot);
+                question_set[question_number]= childSnapshot.val().user_name;
+                question_number++;
+            });
+            });
+
+
+
+      //     console.log("hello") ;
+      //     var question = p.val().user_name;
+      //     console.log(question);
+      //database.ref('users/' + uid + '/question_paper/' + batch + '/' + question_paper_type + '/' + question_paper + '/' )
+      // console.log( database.ref('users/' + uid + '/question_paper/' + batch + '/' + question_paper_type + '/' + question_paper + '/' + snapshot.key+'/xyz/' ));
+       var i = 0;
+        function xyz(){
+            console.log(i , question_number);
+            if( parseInt(i) < parseInt(question_number - 1)){
+              document.getElementById('question-text').innerText = "Question " + parseInt(i +1) + " : " + question_set[i];
+              i++;
+              document.getElementById('next-button').style.display = 'contents';
+              var iframe = document.getElementById('editor')
+                             var l = iframe.contentWindow.document.getElementsByTagName("body")[0] ;
+                             value = l.innerText;
+                             console.log('Check: ' , value);
+                             var today =  new Date();
+                             finaldocs =  finaldocs + '%s% Q ' + question_number1 + ' : ' + value + '\n';
+                             question_number1 = question_number1 + 1;
+                             var datepicker =today.getDate()+'-'+(today.getMonth()+1)+'-'+ today.getFullYear();
+                             var storageRef = firebase.storage().ref( Batch[0] + '/'+ student+ '/test/ADA/' + datepicker + '/EEWydIQ4cmhRP1eCZzMKBbHv7Qo1_test_cseeve_Dipit_2020-7-13.rtf');
+                             storageRef.putString(finaldocs).then(function(snapshot) {
+                             console.log('Uploaded a raw string!');
+                             l.innerText = "";
+                             });
+              if(parseInt(i) >= parseInt(question_number - 1)){
+                document.getElementById('su').style.display = 'inline-block';
+                document.getElementById('next-button').style.display = 'none';
+
+                i=0;
+              }
+            }
+          }
+          function p(){
+            var iframe = document.getElementById('editor')
+                           var l = iframe.contentWindow.document.getElementsByTagName("body")[0] ;
+                           value = l.innerText;
+                           console.log('Check: ' , value);
+                           var today =  new Date();
+                           finaldocs =  finaldocs + '%s% Q ' + question_number1 + ' : ' + value + '\n';
+                           question_number1 = question_number1 + 1;
+                           var datepicker =today.getDate()+'-'+(today.getMonth()+1)+'-'+ today.getFullYear();
+                           var storageRef = firebase.storage().ref(  Batch[0] + '/'+ student+ '/test/ADA/' + datepicker + '/EEWydIQ4cmhRP1eCZzMKBbHv7Qo1_test_cseeve_Dipit_2020-7-13.rtf');
+                           storageRef.putString(finaldocs).then(function(snapshot) {
+                           console.log('Uploaded a raw string!');
+                           window.location.href = 'success';
+                           });
+
+          }
+</script>
+<script src="subjective.js"></script>
+</body>
+</html>

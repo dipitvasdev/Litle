@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Student Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="student.css">
+        <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-storage.js"></script>
+        <link rel="icon" href="tablet.png" sizes="16x16">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+    <body>
+        <nav>
+      <div class="nav-img">
+        <img width="48px" height="48px" src="tablet.png">
+        <span class="head-text">LITLE <sub>by Dr. EDU</sub></span>
+      </div>
+  </nav>
+<div class="main">
+            <div class = "form">
+            <h2>Login</h2>
+            <form action="/welcome"enctype="multipart/form-data" method="post" class="input" id="login" >
+                <div class= "inputBox">
+                    <label>Username</label>
+                    <input id="email" type="text" name="name" placeholder="San Dio">
+                </div>
+                <div class= "inputBox">
+                    <label>Password</label>
+                    <input id = "password" type="password">
+                </div>
+                <div class= "inputBox">
+                    <button id="signin" form="login" type="submit" name="">Sign In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script>
+
+           var firebaseConfig = {
+    apiKey: "AIzaSyB-W2AktdEtM7z_KHSWXXT_3PoBoWFdubM",
+    authDomain: "dredu-71835.firebaseapp.com",
+    databaseURL: "https://dredu-71835.firebaseio.com",
+    projectId: "dredu-71835",
+    storageBucket: "dredu-71835.appspot.com",
+    messagingSenderId: "1010179971420",
+    appId: "1:1010179971420:web:d2fc28ac5634b8ee8a0999",
+    measurementId: "G-19Z5Q66FHX"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+  var database = firebase.database();
+  document.querySelector('#signin').addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var email = document.querySelector('#email').value;
+    console.log(email);
+    var password = document.querySelector('#password').value;
+    console.log(password);
+    firebase.auth().signInWithEmailAndPassword(email, password).then((success) => {
+
+    					var auth = firebase.auth();
+    					var currentUser = auth.currentUser;
+    					console.log(currentUser.uid);
+    			     sessionStorage.setItem('uid' , currentUser.uid);
+                   document.getElementById("login").submit();
+                   var data ;
+                   var database = firebase.database();
+                   database.ref("Student/"+ currentUser.uid + "/").once('value').then(function(snapshot){
+                       data = snapshot.val().name ;
+                       alert(data) ;
+                     });
+        }).catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+          if(error.code == 'auth/wrong-password'){
+          	alert('Wrong Password');}
+          else{
+          	alert(error.message);
+          }
+
+        });
+
+    var credential = firebase.auth.EmailAuthProvider.credential(email, password);
+ 	console.log(credential);
+    var auth = firebase.auth();
+    var currentUser = auth.currentUser;
+    console.log(currentUser);
+    firebase.auth().onAuthStateChanged(function(user) {
+          if (user) {
+              //alert("redirected")
+            } else {
+              // No user is signed in.
+            }
+          });
+
+
+        function writeUserData( uid ,email ) {
+            database.ref('Student' + uid).set({
+            username: uid,
+            email: email,
+          }) ;
+        };
+
+});
+        </script>
+</body>
+</html>

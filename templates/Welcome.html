@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-database.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.14.0/firebase-storage.js"></script>
+        <script>
+        if (sessionStorage.getItem("uid") === null) {
+          window.location.href="/" ;
+        }
+        </script>
+    <title>Welcome | {{result}}</title>
+    <link rel="icon" href="tablet.png" sizes="16x16">
+  </head>
+  <body>
+    <!--NAVBAR-->
+    <nav>
+      <div class="nav-img">
+        <img width="48px" height="48px" src="tablet.png">
+        <span class="head-text">LITLE <sub>by Dr. EDU</sub></span>
+      </div>
+      <div class="hamburger">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        </div>
+      </div>
+      <ul class="nav-links">
+        <li><a href="profile">Profile</a></li>
+        <li><a href="reports">My Reports</a></li>
+        <li><a onclick="logout()"><i class="fa fa-superpowers" aria-hidden="true"></i>LOG OUT</a></li>
+      </ul>
+    </nav>
+    <br>
+    <div class="main">
+      <div class="container">
+        <div class="card">
+          <div class="imgBx">
+            <img src="doubts.jpeg">
+          </div>
+          <div class="content">
+            <button  onclick="location.href='query'" style="color:white; border: none ; outline: none; background: #F64C72  ;text-decoration: none; font-family: 'Exo 2', sans-serif; padding: 5px ; cursor: pointer;"><h2>QUERY PORTAL</h2></button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="imgBx">
+            <img src="test.jpg">
+          </div>
+          <div class="content">
+         <button onclick="location.href='test_portal.html'" style="color:white; border: none ; outline: none; background: #F64C72  ;text-decoration: none; font-family: 'Exo 2', sans-serif; padding: 5px ; cursor: pointer;"><h2>TEST PORTAL</h2></button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="imgBx">
+            <img src="assignment.jpg">
+          </div>
+          <div class="content">
+         <button onclick="location.href='assignment'" style="color:white; border: none ; outline: none; background: #F64C72  ;text-decoration: none; font-family: 'Exo 2', sans-serif; padding: 5px ; cursor: pointer;"><h2>ASSIGNMENT PORTAL</h2></button>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    <script src="app.js"></script>
+    <script type="text/javascript">
+       var firebaseConfig = {
+    apiKey: "AIzaSyB-W2AktdEtM7z_KHSWXXT_3PoBoWFdubM",
+    authDomain: "dredu-71835.firebaseapp.com",
+    databaseURL: "https://dredu-71835.firebaseio.com",
+    projectId: "dredu-71835",
+    storageBucket: "dredu-71835.appspot.com",
+    messagingSenderId: "1010179971420",
+    appId: "1:1010179971420:web:d2fc28ac5634b8ee8a0999",
+    measurementId: "G-19Z5Q66FHX"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+     var uid = sessionStorage.getItem('uid');
+      sessionStorage.setItem('uid',uid);
+      console.log(uid);
+      var database = firebase.database();
+      var batch;
+      var name;
+      database.ref("Student/"+ uid + "/").once('value').then(function(snapshot){
+        if (localStorage.getItem("name") === null) {
+          window.location.href="/" ;
+}
+          localStorage.setItem('name' , snapshot.val().name);
+          localStorage.setItem('batch' , snapshot.val().Batch);
+          var p = snapshot.val().subjects;
+          console.log(p.length);
+          for(var i = 0 ; i < p.length ; i++){
+            console.log(p[i].key);
+            localStorage.setItem(p[i].key , p[i][key]);
+            console.log(localStorage.getItem('ADA'));
+          }
+        });
+        console.log(localStorage.getItem('batch'));
+        function logout(){
+          firebase.auth().signOut().then(function() {
+  alert("You are Now Logged Out") ;
+}).catch(function(error) {
+  //Nothing
+});
+localStorage.clear();
+sessionStorage.clear() ;
+window.location.href="/";
+        }
+    </script>
+  </body>
+</html>

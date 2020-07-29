@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ask Doubt</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+html,body {
+	margin: 0;
+	height: 100%;
+	background:#D4E157;
+	text-align: center;
+	font-family: 'Ubuntu';
+}
+header{
+    font-size: 30px;
+    font-weight: bold;
+}
+.frame{
+	width: 600px;
+	height: 350px;
+	margin: 200px auto 0;
+	position: relative;
+	background: #435d77;
+	border-radius:0 0 40px 40px; 
+}
+#button_open_envelope{
+	width: 180px;
+	height: 30px;
+	position: absolute;
+	z-index: 311;
+	top: 250px;
+	left: 208px;
+	border-radius: 10px;
+	color: #fff;
+	font-size: 26px;
+	padding:15px 0; 
+	border: 2px solid #fff;
+	transition:.3s;
+}
+#button_open_envelope:hover{
+	background: #FFf;
+	color: #2b67cb;
+	transform:scale(1.1);
+	transition:background .25s, transform .5s,ease-in;
+	cursor: pointer;
+}
+.message{
+	position: relative;
+	width: 580px;
+	min-height:300px;
+	height: auto;
+	background: #fff;
+	margin: 0 auto;
+	top: 30px;
+	box-shadow: 0 0 5px 2px #333;
+	transition:2s ease-in-out;
+	transition-delay:1.5s;
+	z-index: 300;
+}
+.left,.right,.top{width: 0;	height: 0;position:absolute;top:0;z-index: 310;}
+.left{	
+	border-left: 300px solid #337efc;
+	border-top: 160px solid transparent;
+	border-bottom: 160px solid transparent;
+}
+.right{	
+	border-right: 300px solid #337efc;
+	border-top: 160px solid transparent;
+	border-bottom: 160px solid transparent;;
+	left:300px;
+}
+.top{	
+	border-right: 300px solid transparent;
+	border-top: 200px solid #03A9F4;
+	border-left: 300px solid transparent;
+	transition:transform 1s,border 1s, ease-in-out;
+	transform-origin:top;
+	transform:rotateX(0deg);
+	z-index: 500;
+}
+.bottom{
+	width: 600px;
+	height: 190px;
+	position: absolute;
+	background: #2b67cb;
+	top: 160px;
+	border-radius:0 0 30px 30px;
+	z-index: 310; 
+}
+.dips{
+    top: 37px !important;
+}
+.open{
+	transform-origin:top;
+	transform:rotateX(180deg);
+	transition:transform .7s,border .7s,z-index .7s ease-in-out;
+	border-top: 200px solid #2c3e50;
+	z-index: 200;
+}
+.pull{
+	-webkit-animation:message_animation 2s 1 ease-in-out;
+	animation:message_animation 2s 1 ease-in-out;
+	-webkit-animation-delay:.9s;
+	animation-delay:.45s;
+	transition:1.5s;
+	transition-delay:1s;
+	z-index: 350;
+}
+#name,#email,#phone,#messarea,#send{
+	margin: 0;
+	padding: 0 0 0 10px;
+	width: 570px;
+	height:40px;
+	float: left;
+	display: block;
+	font-size: 18px;
+	color: #2b67cb;
+	border:none;
+	border-bottom:1px solid #bdbdbd;
+	letter-spacing: normal;
+}
+#messarea{
+	height: 117px;
+	width: 560px;
+	overflow: auto;
+	border:none;
+	padding: 10px;
+}
+#send{ 
+	width:   580px;
+	padding: 0;	
+	border:  none;
+	cursor:  pointer;
+	background: #7CB342;
+	color: #fff;
+	transition:.35s;
+	letter-spacing: 1px;
+}
+#send:hover{background:tomato;transition:.35s;}
+
+::-moz-placeholder{color: #7CB342;font-family: 'Ubuntu';font-size: 20px;opacity: 1;} 
+::-webkit-input-placeholder {color: #7CB342; font-family: 'Ubuntu';font-size: 20px;}
+*:focus {outline: none;}
+input:focus:invalid,textarea:focus:invalid {
+ /* when a field is considered invalid by the browser */
+    background: #fff url(images/invalid.png) no-repeat 98% center;
+    box-shadow: 0 0 5px #d45252;
+    border:1px solid #b03535;
+}
+input:required:valid,textarea:required:valid { 
+	/* when a field is considered valid by the browser */
+    background: #fff url(images/valid.png) no-repeat 98% center;
+    box-shadow: 0 0 5px #5cd053;
+    border-color: #28921f;
+}
+
+
+@-webkit-keyframes message_animation {
+	0%{
+		transform:translatey(0px);
+		z-index: 300;
+		transition: 1s ease-in-out;
+	}
+	50%{
+		transform:translatey(-340px);
+		z-index: 300;
+		transition: 1s ease-in-out;
+	}
+	51%{
+		transform:translatey(-340px);
+		z-index: 350;
+		transition: 1s ease-in-out;
+	}
+	100%{
+		transform:translatey(0px);
+		z-index: 350;
+		transition: 1s ease-in-out;
+	}
+}
+@keyframes message_animation {
+	0%{
+		transform:translatey(0px);
+		z-index: 300;
+		transition: 1s ease-in-out;
+	}
+	50%{
+		transform:translatey(-340px);
+		z-index: 300;
+		transition: 1s ease-in-out;
+	}
+	51%{
+		transform:translatey(-340px);
+		z-index: 350;
+		transition: 1s ease-in-out;
+	}
+	100%{
+		transform:translatey(0px);
+		z-index: 350;
+		transition: 1s ease-in-out;
+	}
+}
+.dropdown {
+  margin: auto;
+  width: 300px;
+  position: relative;
+  -webkit-perspective: 800px;
+          perspective: 800px;
+    margin: 0;
+	width: 580px;
+	height:40px;
+	float: left;
+	display: block;
+	font-size: 18px;
+	color: #2b67cb;
+	border:none;
+	border-bottom:1px solid #bdbdbd;
+	letter-spacing: normal;
+}
+.dropdown.active .selLabel:after {
+  content: '\25B2';
+}
+.dropdown.active .dropdown-list li:nth-child(1) {
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
+}
+.dropdown.active .dropdown-list li:nth-child(2) {
+  -webkit-transform: translateY(200%);
+          transform: translateY(200%);
+}
+.dropdown.active .dropdown-list li:nth-child(3) {
+  -webkit-transform: translateY(300%);
+          transform: translateY(300%);
+}
+.dropdown.active .dropdown-list li:nth-child(4) {
+  -webkit-transform: translateY(400%);
+          transform: translateY(400%);
+}
+.dropdown > span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  color: #fff;
+  font-size: 18px;
+  letter-spacing: 2px;
+  background: #34495e;
+  display: block;
+  padding: 0;
+  position: relative;
+  z-index: 9999;
+  cursor: pointer;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-transform-origin: 50% 0%;
+          transform-origin: 50% 0%;
+  -webkit-transition: -webkit-transform 300ms;
+  transition: -webkit-transform 300ms;
+  transition: transform 300ms;
+  transition: transform 300ms, -webkit-transform 300ms;
+  -webkit-backface-visibility: hidden;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.dropdown > span:after {
+  content: '\25BC';
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  width: 50px;
+  text-align: center;
+  font-size: 12px;
+  padding: 10px;
+  height: 70%;
+  line-height: 24px;
+  border-left: 1px solid #ddd;
+}
+.dropdown > span:active {
+  -webkit-transform: rotateX(45deg);
+          transform: rotateX(45deg);
+}
+.dropdown > span:active:after {
+  content: '\25B2';
+}
+.dropdown-list {
+  position: absolute;
+  top: 0px;
+  width: 500px;
+}
+.dropdown-list li {
+  display: block;
+  margin: 0px;
+  list-style: none;
+  left: 0;
+  opacity: 1;
+  -webkit-transition: -webkit-transform 300ms ease;
+  transition: -webkit-transform 300ms ease;
+  transition: transform 300ms ease;
+  transition: transform 300ms ease, -webkit-transform 300ms ease;
+  position: absolute;
+  top: 0;
+  height: 3s0px;
+  width: 500px;
+}
+.dropdown-list li:nth-child(1) {
+  background-color: #1abc9c;
+  z-index: 5;
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+}
+.dropdown-list li:nth-child(2) {
+  background-color: #3498db;
+  z-index: 4;
+  -webkit-transform: translateY(3%);
+          transform: translateY(3%);
+}
+.dropdown-list li:nth-child(3) {
+  background-color: #9b59b6;
+  z-index: 3;
+  -webkit-transform: translateY(6%);
+          transform: translateY(6%);
+}
+.dropdown-list li:nth-child(4) {
+  background-color: #e67e22;
+  z-index: 2;
+  -webkit-transform: translateY(9%);
+          transform: translateY(9%);
+}
+.dropdown-list li:nth-child(5) {
+  background-color: #9b59b6;
+  z-index: 1;
+  -webkit-transform: translateY(12%);
+          transform: translateY(12%);
+}
+ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start:0px;
+    margin-block-end: 0em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 30px;
+}
+.dropdown-list li span {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  -webkit-backface-visibility: hidden;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  width: 510px;
+  font-size: 18px;
+  line-height: 30px;
+  display: block;
+  color: #fff;
+  cursor: pointer;
+  letter-spacing: 2px;
+}
+</style>
+</head>
+<body translate="no">
+<head>
+<link href='https://fonts.googleapis.com/css?family=Ubuntu' rel='stylesheet' type='text/css' />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+</head>
+<body>
+    <header>Ask Doubts</header>
+<div class="frame">
+<div id="button_open_envelope">
+Send Query
+</div>
+<div class="message">
+<form method="post" action="">
+<input type="text" name="name" id="name" placeholder=" Name* " required>
+<div class="dropdown">
+    <span class="selLabel">Select Batch*</span>
+    <input type="hidden" name="cd-dropdown">
+    <ul class="dropdown-list">
+    <li data-value="1">
+    <span>CSE</span>
+    </li>
+    <li data-value="2">
+    <span>IT</span>
+    </li>
+    <li data-value="3">
+    <span>ECE</span>
+    </li>
+    <li data-value="4">
+    <span>EEE</span>
+    </li>
+    <li data-value="5">
+    <span>ICE</span>
+    </li>
+    <li data-value="6">
+    <span>ML</span>
+    </li>
+    </ul>
+    </div>
+<input type="text" name="phone" id="phone" placeholder=" Subject Code*" required>
+<textarea name="message" id="messarea" placeholder=" Your Doubts or Questions " required></textarea>
+<input type="text" name="address" id="address" style="display: none;">
+<input type="submit" value="Send" id="send">
+</form>
+</div>
+<div class="bottom"></div>
+<div class="left"></div>
+<div class="right"></div>
+<div class="top"></div>
+</div>
+</body>
+<script id="rendered-js">
+$(document).ready(function () {
+  $('.frame').click(function () {
+    $('.top').addClass('open');
+    $('.message').addClass('pull');
+  });
+
+});
+$(document).ready(function () {
+
+$(".selLabel").click(function () {
+  $('.dropdown').toggleClass('active');
+  $('.dropdown-list').toggleClass("dips");
+});
+
+$(".dropdown-list li").click(function () {
+  $('.selLabel').text($(this).text());
+  $('.dropdown').removeClass('active');
+  $('.selected-item p span').text($('.selLabel').text());
+  $('.dropdown-list').removeClass("dips");
+});
+
+});
+    </script>
+</body>
+</html>
